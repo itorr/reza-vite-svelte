@@ -30,9 +30,7 @@ export const fetchAlbums = async () => {
 export const fetchAlbum = async (id) => {
     if(!Caches.albums) await fetchAlbums();
 
-    Caches.Albums[id] = album;
-
-    return album;
+    return Caches.Albums[id];
 }
 
 

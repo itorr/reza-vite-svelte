@@ -1,6 +1,8 @@
 <script>
 import { fetchAlbums } from "../functions/fetch.mjs";
 let albums = [];
+
+
 fetchAlbums().then((data) => {
     albums = data;
 });
@@ -8,21 +10,21 @@ import { getAlbumCoverURL } from '../functions/albums.mjs';
 
 </script>
 
-<div class="albums">
-    {#each albums as album}
-    <div class="album">
-        <img src={getAlbumCoverURL(album)} alt={album.title} />
+<div class="reza-albums">
+    {#each albums as album (album.id)}
+    <a class="reza-album" href={`#/album/${album.id}`}>
+        <img src={getAlbumCoverURL(album)} alt={album.title} style={`background-color:#${album.colors[0]}`} />
         <h2>{album.title}</h2>
         <p>{album.artist}</p>
-    </div>
+    </a>
     {/each}
 </div>
 
-<style lang="less">
-.albums {
+<style global lang="less">
+.reza-albums {
     overflow: hidden;
     padding: 5px;
-    .album {
+    .reza-album {
         float: left;
         width: 260px;
         height: 400px;

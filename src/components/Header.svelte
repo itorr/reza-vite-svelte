@@ -11,15 +11,14 @@ import active from "svelte-spa-router/active";
 	</nav>
 </header>
 
-<style lang="less">
+<style global lang="less">
 .head-bar{
 	nav{
 		a{
 			margin-right: 10px;
-			
+
 			// https://stackoverflow.com/questions/68499862/can-i-keep-unused-css-selector
 			:global(&.active){
-				color:red;
 				font-weight: bold;
 			}
 		}
