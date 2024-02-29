@@ -1,11 +1,15 @@
 <script>
+// @ts-nocheck
+
+	import Cover from '../components/Cover.svelte';
+
     // @ts-nocheck
 
     import { getAlbumCoverURL, getTrackMediaURL } from '../functions/albums.mjs';
-    import { albumBurnNumber, hax2burn } from '../functions/colors.mjs';
+    import { albumBurnNumber, albumLightNumber, hax2burn, hax2light } from '../functions/colors.mjs';
     import { fetchAlbum } from '../functions/fetch.mjs';
 
-    import { setPlaylistAndPlay } from '../state/player.mjs'
+    import { currentTrackId, setPlaylistAndPlay } from '../state/player.mjs'
 
     export let params = {};
 
@@ -33,41 +37,118 @@
 </script>
 
 {#if album}
-    <div class="reza-album-detail"  style={`color:#${hax2burn(album.colors[0],albumBurnNumber)}`}>
-        <img src={getAlbumCoverURL(album)} alt={album.title} />
-        <h2>{album.title}</h2>
-        <p>{album.artist}</p>
+    <div class="reza-album-detail"  style={`color:#${hax2burn(album.colors[0],albumBurnNumber)};--album-color-dark:#${hax2burn(album.colors[0],albumBurnNumber)};--album-color-light:#${hax2light(album.colors[0],albumLightNumber)}`}>
+        <div class="album-info">
+            <Cover src={getAlbumCoverURL(album)} 
+                alt={album.title+'封面图'}
+                className="album-cover" 
+                color="currentColor" />
+            <h2 class="album-title">{album.title}</h2>
+            <p class="album-artist-names">{album.artist}</p>
+        </div>
         <div class="disk-list">
             {#each album.disks as disk, diskIndex (disk.title + '$' + diskIndex)}
                 <div class="disk-item">
                     <h3>{disk.title}</h3>
-                    <ul>
+                    <div class="track-list">
                         {#each disk.tracks as track, trackIndex (track.id)}
-                            <li>
+                            <div class="track-item" 
+                                on:click={playTrackInAlbum(track)}
+                                class:active={$currentTrackId === track.id}>
                                 <i>{trackIndex + 1}</i>
                                 <h4>{track.title}</h4>
                                 {#if track.sub}
                                     <p>{track.sub}</p>
                                 {/if}
-                                <button on:click={playTrackInAlbum(track)}>播放</button>
-                            </li>
+                            </div>
                         {/each}
-                    </ul>
+                    </div>
                 </div>
             {/each}
         </div>
     </div>
-    <pre>{JSON.stringify(album,0,2)}</pre>
+    <!-- <pre>{JSON.stringify(album,0,2)}</pre> -->
 {:else}
     <p>loading...</p>
 {/if}
 
 <style global lang="less">
 .reza-album-detail {
-    padding: 10px;
-    img{
-        width: 260px;
-        height: 260px;
+
+    .album-info{
+        
+        padding: 10px 0;
+        padding-left: 280px;
+        min-height: 260px;
+        overflow: hidden;
+        position: relative;
+
+        :global(.album-cover){
+            width: 260px;
+            height: 260px;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        h2{
+            margin: 0;
+        }
+        p{
+            margin: 0;
+            opacity: 0.5;
+        }
+    }
+
+    .disk-list{
+        pointer-events: none;
+        .disk-item{
+            padding: 10px 0 30px;
+            h3{
+                font-size: 14px;
+                margin: 0;
+                padding: 0 10px;
+            }
+            .track-list{
+                padding: 0;
+                margin: 0;
+                .track-item{
+                    line-height: 20px;
+                    padding: 10px 50px 10px 40px;
+                    position: relative;
+                    cursor: pointer;
+                    pointer-events: auto;
+                    transition: background-color .3s ease, color .3s ease;
+                    i{
+                        position: absolute;
+                        opacity: 0.5;
+                        left: 10px;
+                        font-size: 14px;
+                        width: 1.2em;
+                        padding: 3px 0;
+                        text-align: right;
+                    }
+                    h4{
+                        margin: 0;
+                        padding: 2px 0;
+                    }
+                    p{
+                        margin: 0;
+                        opacity: 0.5;
+                        font-size: 12px;
+                    }
+                    &:hover{
+                        background: var(--album-color-light);
+                    }
+                    &.active{
+                        background: currentColor;
+                        & > *{
+                            color: #FFF;
+                        }
+                    }
+                }
+            }
+        }
+
     }
 }
 </style>

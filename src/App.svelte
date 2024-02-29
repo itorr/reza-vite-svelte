@@ -1,7 +1,7 @@
 <script>
-import Header from "./components/Header.svelte";
-import Router from 'svelte-spa-router'
-import { routes } from "./routes";
+	import Header from "./components/Header.svelte";
+	import Router from 'svelte-spa-router'
+	import { routes } from "./routes";
 	import Player from "./components/Player.svelte";
 	
 </script>
@@ -9,7 +9,7 @@ import { routes } from "./routes";
 <main>
 	<Player />
 	<Header />
-	<Router {routes} />
+	<Router {routes} restoreScrollState={true} />
 </main>
 
 <style>

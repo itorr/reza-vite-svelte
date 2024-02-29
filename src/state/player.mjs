@@ -1,5 +1,6 @@
 import { get, writable } from 'svelte/store';
 import { getTrackMediaURL } from "../functions/albums.mjs";
+import { albumBurnNumber, albumLightNumber, hax2burn, hax2light } from '../functions/colors.mjs';
 
 export const audio = new Audio();
 export const playlist = writable([]);
@@ -7,11 +8,26 @@ export const current = writable(null);
 export const mode = writable('loop');
 export const volume = writable(1);
 export const paused = writable(true);
+export const currentTrackId = writable(null);
+
+current.subscribe((v) => {
+    if(v === null) return;
+    currentTrackId.set(v.track.id);
+});
 
 export function setPlaylist(_playlist,_current) {
     playlist.set(_playlist);
     current.set(_current);
 }
+
+current.subscribe((v) => {
+    if(v === null) return;
+    const album = v.album;
+    const color = album.colors[0];
+    document.documentElement.style.setProperty('--album-color', '#'+color);
+    document.documentElement.style.setProperty('--album-dark', '#'+hax2burn(album.colors[0],albumBurnNumber));
+    document.documentElement.style.setProperty('--album-light', '#'+hax2light(album.colors[0],albumLightNumber));
+});
 
 export function setPlaylistAndPlay(_playlist,_current) {
     setPlaylist(_playlist,_current);
@@ -43,11 +59,27 @@ export function pause() {
     audio.pause();
 }
 
+export function pauseOrPlay() {
+    if(audio.paused) {
+        audio.play();
+    } else {
+        audio.pause();
+    }
+}
+
 export function stop() {
     audio.pause();
     audio.currentTime = 0;
 }
 
+export function playIndex(index) {
+    const _playlist = get(playlist);
+    if(index < 0 || index >= _playlist.length) return;
+
+    current.set(_playlist[index]);
+    audio.src = getTrackMediaURL(_playlist[index].album,_playlist[index].track);
+    audio.play();
+}
 
 export function next() {
 
@@ -66,22 +98,28 @@ export function next() {
     } else {
         return;
     }
-
-    current.set(_playlist[nextIndex]);
-    audio.src = getTrackMediaURL(_playlist[nextIndex].album,_playlist[nextIndex].track);
-    audio.play();
+    
+    playIndex(nextIndex);
 }
 
 export function prev() {
+    const _playlist = get(playlist);
+    const _current = get(current);
+    const _mode = get(mode);
+    const index = _playlist.indexOf(_current);
 
-    // const index = playlist.indexOf(current);
-    // if(mode === 'loop') {
-    //     current.set(playlist[(index - 1 + playlist.length) % playlist.length]);
-    // } else if(mode === 'random') {
-    //     current.set(playlist[Math.floor(Math.random() * playlist.length)]);
-    // } else if(index > 0) {
-    //     current.set(playlist[index - 1]);
-    // }
+    let prevIndex;
+    if(_mode === 'loop') {
+        prevIndex = (index - 1 + _playlist.length) % _playlist.length;
+        // current.set(_playlist[(index - 1 + _playlist.length) % _playlist.length]);
+    } else if(_mode === 'random') {
+        prevIndex = Math.floor(Math.random() * _playlist.length);
+        // current.set(_playlist[Math.floor(Math.random() * _playlist.length)]);
+    } else {
+        return;
+    }
+
+    playIndex(prevIndex);
 }
 
 export function setMode(v) {
@@ -112,16 +150,19 @@ audio.addEventListener('ended', () => {
 
     console.log('播放结束，尝试下一首')
     next();
+
 });
 audio.addEventListener('pause', () => {
     paused.set(true);
+    document.title = '|| ' + get(current).track.title;
 });
 audio.addEventListener('play', () => {
     paused.set(false);
+    document.title = '▶ ' + get(current).track.title;
 });
-audio.addEventListener('timeupdate', () => {
-    console.log('timeupdate',audio.currentTime);
-});
+// audio.addEventListener('timeupdate', () => {
+//     console.log('timeupdate',audio.currentTime);
+// });
 audio.addEventListener('error', (e) => {
     console.log('audio error',e)
 });

@@ -8,6 +8,7 @@
     });
     import { getAlbumCoverURL } from '../functions/albums.mjs';
 	import { albumBurnNumber, hax2burn } from "../functions/colors.mjs";
+	import Cover from "../components/Cover.svelte";
 
 </script>
 
@@ -16,7 +17,10 @@
     <a class="reza-album" 
         href={`#/album/${album.id}`}
         style={`color:#${hax2burn(album.colors[0],albumBurnNumber)}`}>
-        <img src={getAlbumCoverURL(album)} alt={album.title} style={`background-color:#${album.colors[0]}`} />
+        <Cover src={getAlbumCoverURL(album)} 
+            alt={album.title+'封面图'}
+            className="album-cover" 
+            color="currentColor" />
         <h2 class="album-title">{album.title}</h2>
         <p class="artist-names">{album.artist}</p>
     </a>
@@ -32,16 +36,15 @@
         width: 260px;
         height: 400px;
         padding: 5px;
-        img {
-            width: 260px;
-            height: 260px;
-            object-fit: cover;
+        :global(.album-cover) {
+            --cover-width: 260px;
         }
         .album-title{
             line-height: 1;
-            padding: .2em 0;
+            padding: .5em 0 .2em;
         }
         .artist-names{
+            font-size: 12px;
             opacity: 0.5;
         }
     }
