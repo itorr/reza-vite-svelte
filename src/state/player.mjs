@@ -1,5 +1,4 @@
-import { writable } from 'svelte/store';
-
+import { get, writable } from 'svelte/store';
 import { getTrackMediaURL } from "../functions/albums.mjs";
 
 export const audio = new Audio();
@@ -9,15 +8,14 @@ export const mode = writable('loop');
 export const volume = writable(1);
 export const paused = writable(true);
 
-export function setPlaylist(playlist,current) {
-    playlist.set(playlist);
-    current.set(current);
+export function setPlaylist(_playlist,_current) {
+    playlist.set(_playlist);
+    current.set(_current);
 }
 
-export function setPlaylistAndPlay(playlist,current) {
-    playlist.set(playlist);
-    current.set(current);
-    audio.src = getTrackMediaURL(current.album,current.track);
+export function setPlaylistAndPlay(_playlist,_current) {
+    setPlaylist(_playlist,_current);
+    audio.src = getTrackMediaURL(_current.album,_current.track);
     audio.play();
 }
 
@@ -50,16 +48,28 @@ export function stop() {
     audio.currentTime = 0;
 }
 
+
 export function next() {
-    // const index = playlist.indexOf(current);
-    // if(mode === 'loop') {
-    //     current.set(playlist[(index + 1) % playlist.length]);
-    // } else if(mode === 'random') {
-    //     current.set(playlist[Math.floor(Math.random() * playlist.length)]);
-    // } else if(index < playlist.length - 1) {
-    //     current.set(playlist[index + 1]);
-    // }
-    
+
+    const _playlist = get(playlist);
+    const _current = get(current);
+    const _mode = get(mode);
+    const index = _playlist.indexOf(_current);
+
+    let nextIndex;
+    if(_mode === 'loop') {
+        nextIndex = (index + 1) % _playlist.length;
+        // current.set(_playlist[(index + 1) % _playlist.length]);
+    } else if(_mode === 'random') {
+        nextIndex = Math.floor(Math.random() * _playlist.length);
+        // current.set(_playlist[Math.floor(Math.random() * _playlist.length)]);
+    } else {
+        return;
+    }
+
+    current.set(_playlist[nextIndex]);
+    audio.src = getTrackMediaURL(_playlist[nextIndex].album,_playlist[nextIndex].track);
+    audio.play();
 }
 
 export function prev() {
@@ -92,32 +102,25 @@ export function removePlaylistItem(v) {
 
         state.splice(index, 1);
         return state;
-    }
+    });
 }
 
 
 
 
 audio.addEventListener('ended', () => {
-    player.next();
+
+    console.log('播放结束，尝试下一首')
+    next();
 });
 audio.addEventListener('pause', () => {
-    player.update((state) => {
-        state.paused = true;
-        return state;
-    });
+    paused.set(true);
 });
 audio.addEventListener('play', () => {
-    player.update((state) => {
-        state.paused = false;
-        return state;
-    });
+    paused.set(false);
 });
 audio.addEventListener('timeupdate', () => {
-    player.update((state) => {
-        state.currentTime = audio.currentTime;
-        return state;
-    });
+    console.log('timeupdate',audio.currentTime);
 });
 audio.addEventListener('error', (e) => {
     console.log('audio error',e)

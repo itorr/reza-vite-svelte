@@ -1,35 +1,39 @@
 <script>
-import { getAlbumCoverURL, getTrackMediaURL } from '../functions/albums.mjs';
-import { fetchAlbum } from '../functions/fetch.mjs';
+    // @ts-nocheck
 
-import { setPlaylistAndPlay } from '../state/player.mjs'
+    import { getAlbumCoverURL, getTrackMediaURL } from '../functions/albums.mjs';
+    import { albumBurnNumber, hax2burn } from '../functions/colors.mjs';
+    import { fetchAlbum } from '../functions/fetch.mjs';
 
-export let params = {};
-let album = null;
-console.log(JSON.stringify(params));
+    import { setPlaylistAndPlay } from '../state/player.mjs'
 
-fetchAlbum(params.id).then((data) => {
-    album = data;
-});
+    export let params = {};
 
+    let album = null;
+    console.log(JSON.stringify(params));
 
-const playTrackInAlbum = (track) => {
-    const playlist = album.disks.map(disk => disk.tracks).flat().map(track =>{
-        return {
-            album,
-            track,
-        }
+    fetchAlbum(params.id).then((data) => {
+        album = data;
     });
 
-    const current = playlist.find(item => item.track === track);
-    setPlaylistAndPlay(playlist, current);
-}
+
+    const playTrackInAlbum = (track) => {
+        const playlist = album.disks.map(disk => disk.tracks).flat().map(track =>{
+            return {
+                album,
+                track,
+            }
+        });
+
+        const current = playlist.find(item => item.track === track);
+        setPlaylistAndPlay(playlist, current);
+    }
 
 
 </script>
 
 {#if album}
-    <div class="reza-album-detail" >
+    <div class="reza-album-detail"  style={`color:#${hax2burn(album.colors[0],albumBurnNumber)}`}>
         <img src={getAlbumCoverURL(album)} alt={album.title} />
         <h2>{album.title}</h2>
         <p>{album.artist}</p>
@@ -45,7 +49,7 @@ const playTrackInAlbum = (track) => {
                                 {#if track.sub}
                                     <p>{track.sub}</p>
                                 {/if}
-                                <button on:click={play(getTrackMediaURL(album,track))}>播放</button>
+                                <button on:click={playTrackInAlbum(track)}>播放</button>
                             </li>
                         {/each}
                     </ul>
