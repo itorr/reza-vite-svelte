@@ -1,0 +1,37 @@
+<script>
+import { fetchAlbums } from "../functions/fetch.mjs";
+let albums = [];
+fetchAlbums().then((data) => {
+    albums = data;
+});
+import { getAlbumCoverURL } from '../functions/albums.mjs';
+
+</script>
+
+<div class="albums">
+    {#each albums as album}
+    <div class="album">
+        <img src={getAlbumCoverURL(album)} alt={album.title} />
+        <h2>{album.title}</h2>
+        <p>{album.artist}</p>
+    </div>
+    {/each}
+</div>
+
+<style lang="less">
+.albums {
+    overflow: hidden;
+    padding: 5px;
+    .album {
+        float: left;
+        width: 260px;
+        height: 400px;
+        padding: 5px;
+        img {
+            width: 260px;
+            height: 260px;
+            object-fit: cover;
+        }
+    }
+}
+</style>
