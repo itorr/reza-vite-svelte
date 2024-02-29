@@ -46,7 +46,18 @@
         </div>
     </div>
     {:else}
-        <p>No track selected</p>
+    <div class="playing-current-box">
+        <div class="progress-bar">
+            <div class="progress" style={`width:${progress*100}%`}></div>
+        </div>
+        <Cover src=""
+            className="album-cover" 
+            color="currentColor" />
+        <div class="track-info">
+            <h3>Reza!</h3>
+            <p>welcome Reza!</p>
+        </div>
+    </div>
     {/if}
 </div>
 

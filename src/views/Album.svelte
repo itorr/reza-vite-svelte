@@ -78,24 +78,31 @@
     .album-info{
         
         padding: 10px 0;
-        padding-left: 280px;
-        min-height: 260px;
-        overflow: hidden;
+        
+        --cover-width: 260px;
+
+        padding-left: calc(var(--cover-width) + 20px);
+        min-height: var(--cover-width);
         position: relative;
 
         :global(.album-cover){
-            width: 260px;
-            height: 260px;
             position: absolute;
             top: 0;
             left: 0;
         }
         h2{
             margin: 0;
+            line-height: 1.2;
         }
         p{
             margin: 0;
             opacity: 0.5;
+        }
+
+        @media (max-width: 768px) {
+            
+            --cover-width: calc( 50vw - 20px );
+            font-size: 14px;
         }
     }
 

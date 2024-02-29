@@ -9,6 +9,9 @@
     export let style = '';
     let loading = true;
 
+
+    if(!src) color = '#EEE';
+
     const onLoad = () => {
         loading = false;
     }
@@ -23,10 +26,11 @@
     class={`ui-cover ${className}`}
     style={`color:${color||'#EEE'};${style}`}
     data-loading={loading}  >
-
-    <img use:lazyLoad={src} 
-    alt={alt||'封面'} 
-    on:load={onLoad}>
+    {#if src}
+        <img use:lazyLoad={src} 
+            alt={alt||'封面'} 
+            on:load={onLoad}>
+    {/if}
 </div>
 
 <style lang="less">
