@@ -7,16 +7,17 @@ https://lab.magiconch.com/reza/#/albums
 
 ## 使用了
 
-Svelte
-Vite 
-sysapihttpd
-GraphicsMagick
-FFmpeg
-qaac
-xiami.com
-chat.moe.lu
-文心一言
+ - Svelte
+ - Vite 
+ - sysapihttpd
+ - GraphicsMagick
+ - FFmpeg
+ - qaac
+ - xiami.com
+ - chat.moe.lu
+ - 文心一言
 
+Svelte 写起来特别舒服。编译之后只有 13KB，比上一版本的碟片管理编译之后小了几十倍，还是什么优化都没做之前！编译之后的文件看着也顺眼
 
 
 ## 参考
