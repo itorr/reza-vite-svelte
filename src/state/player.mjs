@@ -12,16 +12,9 @@ export const currentTrackId = writable(null);
 
 current.subscribe((v) => {
     if(v === null) return;
+
     currentTrackId.set(v.track.id);
-});
 
-export function setPlaylist(_playlist,_current) {
-    playlist.set(_playlist);
-    current.set(_current);
-}
-
-current.subscribe((v) => {
-    if(v === null) return;
     const album = v.album;
     const color = album.colors[0];
     document.documentElement.style.setProperty('--album-color', '#'+color);
@@ -29,12 +22,18 @@ current.subscribe((v) => {
     document.documentElement.style.setProperty('--album-color-light', '#'+hax2light(album.colors[0],albumLightNumber));
 });
 
+
+export function setPlaylist(_playlist,_current) {
+    playlist.set(_playlist);
+    current.set(_current);
+}
+
+
 import { setMediaSession } from "../functions/media.mjs";
-export function setPlaylistAndPlay(_playlist,_current) {
-    if(!_current) return;
 
-    setPlaylist(_playlist,_current);
-
+export function playCurrent(_current) {
+    
+    current.set(_current);
     const { track, album } = _current;
     audio.src = getTrackMediaURL(album,track);
     audio.play();
@@ -51,6 +50,14 @@ export function setPlaylistAndPlay(_playlist,_current) {
         album: album.title,
         coverURL: getAlbumCoverURL(album)
     });
+};
+
+export function setPlaylistAndPlay(_playlist,_current) {
+    if(!_current) return;
+
+    setPlaylist(_playlist,_current);
+
+    playCurrent(_current);
 }
 
 export function seek(time) {
@@ -92,14 +99,20 @@ export function stop() {
     audio.currentTime = 0;
 }
 
+export function playItem(item) {
+    if(!get(playlist).includes(item)) return;
+
+    current.set(item);
+    playCurrent(item);
+}
+
 export function playIndex(index) {
     const _playlist = get(playlist);
     if(index < 0 || index >= _playlist.length) return;
 
-    current.set(_playlist[index]);
-    audio.src = getTrackMediaURL(_playlist[index].album,_playlist[index].track);
-    audio.play();
+    playItem(_playlist[index]);
 }
+
 
 export function next() {
 

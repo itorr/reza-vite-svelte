@@ -1,6 +1,6 @@
 <script>
 	import { albumBurnNumber, albumLightNumber, hax2burn, hax2light } from "../functions/colors.mjs";
-	import { current, playlist } from "../state/player.mjs";
+	import { current, playCurrent, playlist } from "../state/player.mjs";
 	
 	import { getAlbumCoverURL } from "../functions/albums.mjs";
 	
@@ -17,6 +17,7 @@
 		{#each $playlist as item, itemIndex (item.track.id)}
 			<div class="play-item" 
 				data-active={$current === item}
+				on:click={playCurrent(item)}
 				style={`--album-color-dark:${'#'+hax2burn(item.album.colors[0],albumBurnNumber)};--album-color-light:${'#'+hax2light(item.album.colors[0],albumLightNumber)}`}>
 				
 				<Cover 
