@@ -6,6 +6,7 @@
 	import { onDestroy, onMount } from 'svelte';
 	import Cover from './Cover.svelte';
 	import CoverDOM from './CoverDOM.svelte';
+	import active from 'svelte-spa-router/active';
 
     export let params = {};
     let currentTime = 0;
@@ -53,7 +54,9 @@
             <a on:click={prev}>prev</a>
             <a on:click={next}>next</a>
             <a on:click={switchMode}>{$mode}</a>
-            
+            <span class="r">
+		        <a href="#/playlist" use:active>playlist</a>
+            </span>
         </div>
         <time>
             <span data-text={second2ms(currentTime)}></span>
@@ -108,8 +111,7 @@
         opacity: .5;
     }
     .track-info{
-        float: left;
-        padding: 5px 10px;
+        padding: 5px 10px 5px 90px;
         h3{
             font-size: 18px;
             margin: 0;
@@ -118,6 +120,11 @@
             margin: 0;
             font-size: 12px;
             opacity: 0.5;
+        }
+        a{
+            :global(&.active){
+                font-weight: bold;
+            }
         }
     }
     .progress-bar{
