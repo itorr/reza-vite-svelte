@@ -29,10 +29,18 @@ current.subscribe((v) => {
     document.documentElement.style.setProperty('--album-light', '#'+hax2light(album.colors[0],albumLightNumber));
 });
 
+import { setMediaSession } from "../functions/media.mjs";
 export function setPlaylistAndPlay(_playlist,_current) {
     setPlaylist(_playlist,_current);
     audio.src = getTrackMediaURL(_current.album,_current.track);
     audio.play();
+
+    setMediaSession({
+        title: _current.track.title,
+        artist: String(_current.track.artist) || String(_current.album.artist) || 'Reza!',
+        album: _current.album.title,
+        coverURL: _current.album.coverURL
+    });
 }
 
 export function seek(time) {
