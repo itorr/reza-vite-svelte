@@ -14,10 +14,19 @@
     export let params = {};
 
     let album = null;
-    console.log(JSON.stringify(params));
+    let albumDetailStyleText = ''; 
 
     fetchAlbum(params.id).then((data) => {
         album = data;
+
+        const color = album.colors[0];
+
+        // 给专辑详情页设置颜色
+        albumDetailStyleText = [
+            `color:#${hax2burn(color,albumBurnNumber)}`,
+            `--album-color-dark:#${hax2burn(color,albumBurnNumber)}`,
+            `--album-color-light:#${hax2light(color,albumLightNumber)}`
+        ].join(';');
     });
 
 
@@ -37,7 +46,7 @@
 </script>
 
 {#if album}
-    <div class="reza-album-detail"  style={`color:#${hax2burn(album.colors[0],albumBurnNumber)};--album-color-dark:#${hax2burn(album.colors[0],albumBurnNumber)};--album-color-light:#${hax2light(album.colors[0],albumLightNumber)}`}>
+    <div class="reza-album-detail" style={albumDetailStyleText}>
         <div class="album-info">
             <Cover src={getAlbumCoverURL(album)} 
                 alt={album.title+'封面图'}

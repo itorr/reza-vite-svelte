@@ -146,6 +146,15 @@ export function setMode(v) {
     mode.set(v);
 }
 
+export function switchMode() {
+    const _mode = get(mode);
+    if(_mode === 'loop') {
+        mode.set('random');
+    } else if(_mode === 'random') {
+        mode.set('loop');
+    }
+}
+
 export function addPlaylistItems(v) {
     playlist.update((state) => {
         state.push(...v);

@@ -13,6 +13,3 @@
 	<Router {routes} restoreScrollState={true} />
 	<Footer />
 </main>
-
-<style>
-</style>

@@ -1,8 +1,9 @@
 <script>
     import { getAlbumCoverURL, getTrackMediaURL } from '../functions/albums.mjs';
     import { fetchAlbum } from '../functions/fetch.mjs';
-    import { audio, current, next, pauseOrPlay, paused, prev } from '../state/player.mjs';
+    import { audio, current, next, pauseOrPlay, paused, prev, mode, switchMode } from '../state/player.mjs';
     import { albumBurnNumber, hax2burn } from '../functions/colors.mjs';
+    import { second2ms } from '../functions/time.mjs';
 	import { onDestroy, onMount } from 'svelte';
 	import Cover from './Cover.svelte';
 	import CoverDOM from './CoverDOM.svelte';
@@ -32,7 +33,7 @@
     onDestroy(() => {
         audio.removeEventListener('timeupdate', onTimeUpdate);
     });
-
+    
 </script>
 
 <div class="player-box">
@@ -52,7 +53,14 @@
             <a on:click={pauseOrPlay}>{ $paused ? 'play' : 'pause'}</a>
             <a on:click={prev}>prev</a>
             <a on:click={next}>next</a>
+            <a on:click={switchMode}>{$mode}</a>
+            
         </div>
+        <time>
+            <span data-text={second2ms(currentTime)}></span>
+            /
+            <span data-text={second2ms(duration)}></span>
+        </time>
     </div>
     {:else}
     <div class="playing-current-box">
@@ -128,6 +136,16 @@
             border-radius: 2px;
             min-width: 2px;
             background-color: currentColor;
+        }
+    }
+    time{
+        position: absolute;
+        right:8px;
+        top:8px;
+        line-height: 12px;
+        font-size: 12px;
+        span{
+            display: inline-block;
         }
     }
 }
