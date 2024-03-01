@@ -5,6 +5,7 @@
 	import { getAlbumCoverURL } from "../functions/albums.mjs";
 	
 	import Cover from "../components/Cover.svelte";
+	import { second2ms } from "../functions/time.mjs";
 	playlist.subscribe(playlist => {
 		console.log(playlist);
 	});
@@ -37,6 +38,7 @@
 					<p>
 						<span>{item.track.artist || item.album.artist}</span>
 						<span>{item.album.title}</span>
+						<span>{second2ms(item.track.duration)}</span>
 					</p>
 				</div>
 			</div>
