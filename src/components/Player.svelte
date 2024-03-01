@@ -95,6 +95,7 @@
     :global(.album-cover){
         float: left;
         --cover-width: 80px;
+        cursor: pointer;
     }
     :global(.album-cover.paused){
         opacity: .5;
