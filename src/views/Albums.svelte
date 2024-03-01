@@ -26,38 +26,3 @@
     </a>
     {/each}
 </div>
-
-<style global lang="less">
-.reza-albums {
-    overflow: hidden;
-    padding: 5px;
-    .reza-album {
-        float: left;
-        --album-padding: 5px;
-        --cover-width: 260px;
-
-        padding: var(--album-padding);
-        width: var(--cover-width);
-        height: calc(var(--cover-width) + 100px);
-        // :global(.album-cover) {
-        // }
-        .album-title{
-            line-height: 1;
-            padding: .5em 0 .2em;
-        }
-        .artist-names{
-            font-size: 12px;
-            opacity: 0.5;
-        }
-    }
-    @media (max-width: 768px) {
-        .reza-album {
-            width: 50%;
-            box-sizing: border-box;
-            --cover-width: calc( 100vw / 2 - var(--album-padding) * 3 );
-            
-            font-size: 14px;
-        }
-    }
-}
-</style>

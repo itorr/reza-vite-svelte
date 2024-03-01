@@ -1,0 +1,73 @@
+.reza-albums {
+    overflow: hidden;
+    padding: 5px;
+    font-size: 14px;
+    .reza-album {
+        float: left;
+        --album-padding: 5px;
+        --cover-width: 260px;
+        box-sizing: border-box;
+
+        padding: var(--album-padding);
+        width: var(--cover-width);
+        height: calc(var(--cover-width) + 100px);
+        // :global(.album-cover) {
+        // }
+        .album-title{
+            line-height: 1;
+            padding: .5em 0 .2em;
+        }
+        .artist-names{
+            font-size: 12px;
+            opacity: 0.5;
+        }
+    }
+    @media (max-width: 768px) {
+        .reza-album {
+            width: 50%;
+            --cover-width: calc( 100vw / 2 - var(--album-padding) * 3 );
+            
+            font-size: 14px;
+        }
+    }
+    @media (min-width: 768px) {
+
+        .reza-album {
+            width: 33.3333%;
+            --cover-width: calc( 100vw / 3 - var(--album-padding) * 3 );
+        }
+    }
+    @media (min-width: 960px) {
+        .reza-album {
+            width: 25%;
+            --cover-width: calc( 100vw / 4 - var(--album-padding) * 3 );
+        }
+    }
+    @media (min-width: 1200px) {
+        .reza-album {
+            width: 20%;
+            --cover-width: calc( 100vw / 5 - var(--album-padding) * 3 );
+        }
+    }
+    @media (min-width: 1400px) {
+        .reza-album {
+            width: 16.6667%;
+            --cover-width: calc( 100vw / 6 - var(--album-padding) * 3 );
+        }
+    }
+    @media (min-width: 1700px) {
+        .reza-album {
+            width: 14.2857%;
+            --cover-width: calc( 100vw / 7 - var(--album-padding) * 3 );
+        }
+    }
+    @media (min-width: 2100px) {
+        max-width: 2080px;
+        margin: 0 auto;
+        .reza-album {
+            width: 12.5%;
+            --cover-width: calc( 2080px / 8 - var(--album-padding) * 3 );
+        }
+    }
+
+}
