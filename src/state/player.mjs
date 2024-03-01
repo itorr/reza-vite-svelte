@@ -25,8 +25,8 @@ current.subscribe((v) => {
     const album = v.album;
     const color = album.colors[0];
     document.documentElement.style.setProperty('--album-color', '#'+color);
-    document.documentElement.style.setProperty('--album-dark', '#'+hax2burn(album.colors[0],albumBurnNumber));
-    document.documentElement.style.setProperty('--album-light', '#'+hax2light(album.colors[0],albumLightNumber));
+    document.documentElement.style.setProperty('--album-color-dark', '#'+hax2burn(album.colors[0],albumBurnNumber));
+    document.documentElement.style.setProperty('--album-color-light', '#'+hax2light(album.colors[0],albumLightNumber));
 });
 
 import { setMediaSession } from "../functions/media.mjs";

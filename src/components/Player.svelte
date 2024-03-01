@@ -42,9 +42,9 @@
             <div class="progress" style={`width:${progress*100}%`}></div>
         </div>
         <CoverDOM src={currentAlbumCoverImageURL} 
-            alt={$current.album.title+'封面图'}
+            alt={$current.album.title}
             className="{`album-cover ${$paused?'paused':''}`}" 
-            color="var(--album-light)"
+            color="var(--album-color-light)"
             on:click={pauseOrPlay} />
         <div class="track-info">
             <h3>{$current.track.title}</h3>
@@ -91,12 +91,12 @@
         margin-top: -1px;
         height: 1px;
         width: 100%;
-        background-color: var(--album-dark);
+        background-color: var(--album-color-dark);
         opacity: .2;
 
         box-shadow: 
-            0 2px 0 0 var(--album-light),
-            0 3px 10px -3px var(--album-light);
+            0 2px 0 0 var(--album-color-light),
+            0 3px 10px -3px var(--album-color-light);
     }
 
     :global(.album-cover){

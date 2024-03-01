@@ -1,14 +1,19 @@
 import { get, writable } from "svelte/store";
-import { fetchAlbums } from "../functions/fetch.mjs";
+import { BASE_MUSIC_URL } from "../functions/config.mjs";
+import { fetchJSON } from "../functions/fetch.mjs";
 
 export const albums = writable([]);
+
+
+export const fetchAlbums = async () => await fetchJSON(`${BASE_MUSIC_URL}albums.json`);
+
 
 let albumsLoadPromise = null;
 const updateAlbums = async () => {
     if(!albumsLoadPromise){
         albumsLoadPromise = fetchAlbums();
     }
-    
+
     const albumsData = await albumsLoadPromise;
     albums.set(albumsData);
 }

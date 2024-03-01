@@ -3,7 +3,6 @@
     import { getAlbumCoverURL } from '../functions/albums.mjs';
 	import { albumBurnNumber, hax2burn } from "../functions/colors.mjs";
 	import Cover from "../components/Cover.svelte";
-
 </script>
 
 <div class="reza-albums">
@@ -12,7 +11,7 @@
         href={`#/album/${album.id}`}
         style={`color:#${hax2burn(album.colors[0],albumBurnNumber)}`}>
         <Cover src={getAlbumCoverURL(album)} 
-            alt={album.title+'封面图'}
+            alt={album.title}
             className="album-cover" 
             color="currentColor" />
         <h2 class="album-title">{album.title}</h2>

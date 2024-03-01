@@ -50,7 +50,7 @@
     <div class="reza-album-detail" style={albumDetailStyleText}>
         <div class="album-info">
             <Cover src={getAlbumCoverURL(album)} 
-                alt={album.title+'封面图'}
+                alt={album.title}
                 className="album-cover" 
                 color="currentColor" />
             <h2 class="album-title">{album.title}</h2>
@@ -64,7 +64,7 @@
                         {#each disk.tracks as track, trackIndex (track.id)}
                             <div class="track-item" 
                                 on:click={playTrackInAlbum(track)}
-                                class:active={$currentTrackId === track.id}>
+                                data-active={$currentTrackId === track.id}>
                                 <i>{trackIndex + 1}</i>
                                 <h4>{track.title}</h4>
                                 {#if track.sub}
@@ -156,8 +156,10 @@
                     &:hover{
                         background: var(--album-color-light);
                     }
-                    &.active{
+                    &[data-active=true]{
                         background: currentColor;
+                        cursor: default;
+                        pointer-events: none;
                         & > *{
                             color: #FFF;
                         }
