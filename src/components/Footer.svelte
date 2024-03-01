@@ -7,8 +7,27 @@
         <span>
             <a href="https://github.com/itorr/reza-vite-svelte" target="_blank">Github</a>
         </span>
+        <br>
         <span>
-            碟片信息 by <a href="https://xiami.com">©虾米音乐</a>
+            碟片信息
+            <a href="https://xiami.com" target="_blank">©虾米音乐</a>
+        </span>
+        <span>
+            框架
+            <a href="https://svelte.dev/" target="_blank">Svelte</a>
+        </span>
+        <span>
+            build
+            <a href="https://vitejs.dev/" target="_blank">Vite</a>
+        </span>
+        <span>
+            Encode
+            <a href="https://www.ffmpeg.org/" target="_blank">FFmpeg</a> 
+            <a href="https://github.com/nu774/qaac" target="_blank">qaac</a> 
+        </span>
+        <span>
+            Server
+            <a href="https://www.nginx.com/" target="_blank">sysapihttpd</a>
         </span>
     </p>
 </footer>
@@ -19,6 +38,7 @@
         padding: 20px;
         text-align: center;
         color: #999;
+        line-height: 24px;
         span,b{
             display: inline-block;
             margin: 0 6px;
