@@ -27,8 +27,8 @@
     style={`color:${color||'#EEE'};${style}`}
     data-loading={loading}  >
     {#if src}
-        <img use:lazyLoad={src} 
+        <div style={`background-image:url(${src})`}
             alt={alt||'封面'} 
-            on:load={onLoad}>
+            on:load={onLoad}></div>
     {/if}
 </div>

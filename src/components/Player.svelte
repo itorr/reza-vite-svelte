@@ -5,12 +5,20 @@
     import { albumBurnNumber, hax2burn } from '../functions/colors.mjs';
 	import { onDestroy, onMount } from 'svelte';
 	import Cover from './Cover.svelte';
+	import CoverDOM from './CoverDOM.svelte';
 
     export let params = {};
     let currentTime = 0;
     let duration = 0;
     let progress = 0;
 
+    let currentAlbumCoverImageURL = '';
+
+    current.subscribe(_current => {
+        if (!_current) return;
+        if (!_current.album ) return;
+        currentAlbumCoverImageURL = getAlbumCoverURL(_current.album);
+    });
 
     const onTimeUpdate = () => {
         currentTime = audio.currentTime;
@@ -33,7 +41,7 @@
         <div class="progress-bar">
             <div class="progress" style={`width:${progress*100}%`}></div>
         </div>
-        <Cover src={getAlbumCoverURL($current.album)} 
+        <CoverDOM src={currentAlbumCoverImageURL} 
             alt={$current.album.title+'封面图'}
             className="album-cover" 
             color="currentColor" />
@@ -63,22 +71,20 @@
 
 <style lang="less">
 .player-box{
-    overflow: hidden;
+    // overflow: hidden;
 
     position: relative;
     z-index: 0;
 
     &:after{
         content: '';
-        position: absolute;
-        bottom:0;
-        left: 0;
-        right: 0;
-        z-index: -1;
-
+        display: block;
+        clear: both;
+        margin-top: -1px;
         height: 1px;
+        width: 100%;
         background-color: var(--album-dark);
-        opacity: .3;
+        opacity: .2;
 
         box-shadow: 
             0 2px 0 0 var(--album-light),

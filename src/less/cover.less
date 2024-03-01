@@ -1,0 +1,34 @@
+:root{
+    --cover-width:280px;
+}
+.ui-cover{
+    width:var(--cover-width);
+    height:var(--cover-width);
+
+    position: relative;
+    color: #EEE;
+    background: currentColor no-repeat 50% 50%;
+    background-size: cover;
+    box-shadow: currentColor 0px 10px 30px -20px;
+    div,img{
+        display: block;
+        width: 100%;
+        height:100%;
+    }
+    img{
+        opacity: 0;
+        transform: scale(1.03);
+        transition:opacity .3s ease,transform .3s ease;
+    }
+    div{
+        background: #EEE no-repeat 50% 50%;
+        background-size: cover;
+        transition:opacity .3s ease,transform .3s ease,background-image 1s ease;
+    }
+    &[data-loading="false"]{
+        img{
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+}

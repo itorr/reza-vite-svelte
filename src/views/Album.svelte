@@ -76,19 +76,19 @@
 .reza-album-detail {
 
     .album-info{
-        
-        padding: 10px 0;
+        --album-detail-info-padding: 10px;
+        padding: var(--album-detail-info-padding);
         
         --cover-width: 260px;
 
-        padding-left: calc(var(--cover-width) + 20px);
+        padding-left: calc(var(--cover-width) + 24px);
         min-height: var(--cover-width);
         position: relative;
 
         :global(.album-cover){
             position: absolute;
-            top: 0;
-            left: 0;
+            top: var(--album-detail-info-padding);
+            left: var(--album-detail-info-padding);
         }
         h2{
             margin: 0;
