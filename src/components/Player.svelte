@@ -1,6 +1,5 @@
 <script>
     import { getAlbumCoverURL, getTrackMediaURL } from '../functions/albums.mjs';
-    import { fetchAlbum } from '../functions/fetch.mjs';
     import { audio, current, next, pauseOrPlay, paused, prev, mode, switchMode } from '../state/player.mjs';
     import { albumBurnNumber, hax2burn } from '../functions/colors.mjs';
     import { second2ms } from '../functions/time.mjs';

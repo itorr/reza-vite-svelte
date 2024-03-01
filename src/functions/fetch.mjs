@@ -4,36 +4,5 @@ export const fetch = async (url) => {
     return data;
 };
 
-
-const Caches = {
-    albums: null,
-    Albums:{},
-};
-
 // https://n.magiconch.com:8087/music/albums.json
-export const fetchAlbums = async () => {
-    if(Caches.albums) {
-        return Caches.albums;
-    }
-
-    const albums = await fetch('https://n.magiconch.com:8087/music/albums.json');
-    Caches.albums = albums;
-
-    albums.forEach(album => {
-        Caches.Albums[album.id] = album;
-    });
-
-    return albums
-};
-
-
-export const fetchAlbum = async (id) => {
-    if(!Caches.albums) await fetchAlbums();
-
-    return Caches.Albums[id];
-}
-
-
-export const fetchBashData = async () => {
-    await fetchAlbums();
-}
+export const fetchAlbums = async () => await fetch('https://n.magiconch.com:8087/music/albums.json');

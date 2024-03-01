@@ -7,16 +7,17 @@
 
     import { getAlbumCoverURL, getTrackMediaURL } from '../functions/albums.mjs';
     import { albumBurnNumber, albumLightNumber, hax2burn, hax2light } from '../functions/colors.mjs';
-    import { fetchAlbum } from '../functions/fetch.mjs';
+    
 
     import { currentTrackId, setPlaylistAndPlay } from '../state/player.mjs'
+	import { getAlbumById } from '../stores/albums.mjs';
 
     export let params = {};
 
     let album = null;
     let albumDetailStyleText = ''; 
 
-    fetchAlbum(params.id).then((data) => {
+    getAlbumById(params.id).then((data) => {
         album = data;
 
         const color = album.colors[0];

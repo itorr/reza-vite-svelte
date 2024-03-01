@@ -1,11 +1,5 @@
 <script>
-    import { fetchAlbums } from "../functions/fetch.mjs";
-    let albums = [];
-
-
-    fetchAlbums().then((data) => {
-        albums = data;
-    });
+    import { albums } from '../stores/albums.mjs';
     import { getAlbumCoverURL } from '../functions/albums.mjs';
 	import { albumBurnNumber, hax2burn } from "../functions/colors.mjs";
 	import Cover from "../components/Cover.svelte";
@@ -13,7 +7,7 @@
 </script>
 
 <div class="reza-albums">
-    {#each albums as album (album.id)}
+    {#each $albums as album (album.id)}
     <a class="reza-album" 
         href={`#/album/${album.id}`}
         style={`color:#${hax2burn(album.colors[0],albumBurnNumber)}`}>
