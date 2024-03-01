@@ -31,15 +31,25 @@ current.subscribe((v) => {
 
 import { setMediaSession } from "../functions/media.mjs";
 export function setPlaylistAndPlay(_playlist,_current) {
+    if(!_current) return;
+
     setPlaylist(_playlist,_current);
-    audio.src = getTrackMediaURL(_current.album,_current.track);
+
+    const { track, album } = _current;
+    audio.src = getTrackMediaURL(album,track);
     audio.play();
 
+    const artist = [...new Set([
+        track.artist,
+        album.artist
+    ].flat().filter(a=>a))].find(v => v && v.length) || 'Reza!';
+
+
     setMediaSession({
-        title: _current.track.title,
-        artist: String(_current.track.artist) || String(_current.album.artist) || 'Reza!',
-        album: _current.album.title,
-        coverURL: getAlbumCoverURL(_current.album)
+        title: track.title,
+        artist,
+        album: album.title,
+        coverURL: getAlbumCoverURL(album)
     });
 }
 
@@ -68,6 +78,8 @@ export function pause() {
 }
 
 export function pauseOrPlay() {
+    if(!audio.src) return;
+    
     if(audio.paused) {
         audio.play();
     } else {

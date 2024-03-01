@@ -43,8 +43,9 @@
         </div>
         <CoverDOM src={currentAlbumCoverImageURL} 
             alt={$current.album.title+'封面图'}
-            className="album-cover" 
-            color="currentColor" />
+            className="{`album-cover ${$paused?'paused':''}`}" 
+            color="currentColor"
+            on:click={pauseOrPlay} />
         <div class="track-info">
             <h3>{$current.track.title}</h3>
             <p>{$current.track.artist || $current.album.artist }</p>
@@ -58,7 +59,7 @@
         <div class="progress-bar">
             <div class="progress" style={`width:${progress*100}%`}></div>
         </div>
-        <Cover src=""
+        <CoverDOM src=""
             className="album-cover" 
             color="currentColor" />
         <div class="track-info">
@@ -94,6 +95,9 @@
     :global(.album-cover){
         float: left;
         --cover-width: 80px;
+    }
+    :global(.album-cover.paused){
+        opacity: .5;
     }
     .track-info{
         float: left;

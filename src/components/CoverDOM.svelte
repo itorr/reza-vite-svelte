@@ -1,5 +1,5 @@
 <script>
-	import { onMount } from "svelte";
+	import { createEventDispatcher, onMount } from "svelte";
     import { lazyLoad } from '../functions/lazyLoad.js'
 
     export let src = '';
@@ -16,6 +16,10 @@
         loading = false;
     }
 
+    const dispatch = createEventDispatcher()
+    const onClick = (e) => {
+        dispatch('click', e);
+    }
     // onMount(() => {
     //     console.log(
     //         `Cover component mounted with src:${src}`
@@ -25,6 +29,7 @@
 <div
     class={`ui-cover ${className}`}
     style={`color:${color||'#EEE'};${style}`}
+    on:click={onClick}
     data-loading={loading}  >
     {#if src}
         <div style={`background-image:url(${src})`}
