@@ -7,15 +7,20 @@
 
 <div class="reza-albums">
     {#each $albums as album (album.id)}
-    <a class="reza-album" 
-        href={`#/album/${album.id}`}
+    <div class="reza-album" 
         style={`color:#${hax2burn(album.colors[0],albumBurnNumber)}`}>
-        <Cover src={getAlbumCoverURL(album)} 
-            alt={album.title}
-            className="album-cover" 
-            color="currentColor" />
-        <h2 class="album-title">{album.title}</h2>
-        <p class="artist-names">{album.artist}</p>
-    </a>
+        <a class="reza-album-link" href={`#/album/${album.id}`}>
+            <Cover src={getAlbumCoverURL(album)} 
+                alt={album.title}
+                className="album-cover" 
+                color="currentColor" />
+            <div class="album-title-box">
+                <h2 class="album-title">{album.title}</h2>
+            </div>
+            <div class="artist-names-box">
+                <p class="artist-names">{album.artist}</p>
+            </div>
+        </a>
+    </div>
     {/each}
 </div>

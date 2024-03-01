@@ -11,15 +11,30 @@
         padding: var(--album-padding);
         width: var(--cover-width);
         height: calc(var(--cover-width) + 100px);
-        // :global(.album-cover) {
-        // }
-        .album-title{
-            line-height: 1;
-            padding: .5em 0 .2em;
+
+        .reza-album-link{
+            pointer-events: none;
+            .album-cover{
+                pointer-events: auto;
+            }
         }
-        .artist-names{
+        .album-title-box{
+            pointer-events: none;
+            padding: 10px 0 4px;
+            .album-title{
+                display: inline;
+                line-height: 1;
+                pointer-events: auto;
+            }
+        }
+        .artist-names-box{
             font-size: 12px;
             opacity: 0.5;
+            pointer-events: none;
+            .artist-names{
+                display: inline;
+                pointer-events: auto;
+            }
         }
     }
     @media (max-width: 768px) {
