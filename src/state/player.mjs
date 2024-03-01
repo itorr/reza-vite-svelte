@@ -1,6 +1,6 @@
 import { get, writable } from 'svelte/store';
-import { getAlbumCoverURL, getTrackMediaURL } from "../functions/albums.mjs";
-import { albumBurnNumber, albumLightNumber, hax2burn, hax2light } from '../functions/colors.mjs';
+import { getAlbumCoverURL, getArtistByAlbumTrack, getTrackMediaURL, setDocumentAlbumColor } from "../functions/albums.mjs";
+
 
 export const audio = new Audio();
 export const playlist = writable([]);
@@ -10,55 +10,8 @@ export const volume = writable(1);
 export const paused = writable(true);
 export const currentTrackId = writable(null);
 
-current.subscribe((v) => {
-    if(v === null) return;
-
-    currentTrackId.set(v.track.id);
-
-    const album = v.album;
-    const color = album.colors[0];
-    document.documentElement.style.setProperty('--album-color', '#'+color);
-    document.documentElement.style.setProperty('--album-color-dark', '#'+hax2burn(album.colors[0],albumBurnNumber));
-    document.documentElement.style.setProperty('--album-color-light', '#'+hax2light(album.colors[0],albumLightNumber));
-});
 
 
-export function setPlaylist(_playlist,_current) {
-    playlist.set(_playlist);
-    current.set(_current);
-}
-
-
-import { setMediaSession } from "../functions/media.mjs";
-
-export function playCurrent(_current) {
-    
-    current.set(_current);
-    const { track, album } = _current;
-    audio.src = getTrackMediaURL(album,track);
-    audio.play();
-
-    const artist = [...new Set([
-        track.artist,
-        album.artist
-    ].flat().filter(a=>a))].find(v => v && v.length) || 'Reza!';
-
-
-    setMediaSession({
-        title: track.title,
-        artist,
-        album: album.title,
-        coverURL: getAlbumCoverURL(album)
-    });
-};
-
-export function setPlaylistAndPlay(_playlist,_current) {
-    if(!_current) return;
-
-    setPlaylist(_playlist,_current);
-
-    playCurrent(_current);
-}
 
 export function seek(time) {
     audio.currentTime = time;
@@ -98,6 +51,74 @@ export function stop() {
     audio.pause();
     audio.currentTime = 0;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+current.subscribe((v) => {
+    if(v === null) return;
+
+    currentTrackId.set(v.track.id);
+
+    const album = v.album;
+    setDocumentAlbumColor(album.colors[0]);
+});
+
+
+export function setPlaylist(_playlist,_current) {
+    playlist.set(_playlist);
+    current.set(_current);
+}
+
+
+import { clearMediaSession, setMediaSession } from "../functions/media.mjs";
+import { setDocumentTitle, setPlayingTitle } from '../functions/document-title';
+
+export function playCurrent(_current) {
+    
+    current.set(_current);
+    const { track, album } = _current;
+    audio.src = getTrackMediaURL(album,track);
+    audio.play();
+
+    const artist = getArtistByAlbumTrack(album,track);
+
+    setMediaSession({
+        title: track.title,
+        artist,
+        album: album.title,
+        coverURL: getAlbumCoverURL(album)
+    });
+};
+
+export function setPlaylistAndPlay(_playlist,_current) {
+    if(!_current) return;
+
+    setPlaylist(_playlist,_current);
+
+    playCurrent(_current);
+}
+
+
+export function clearPlaylistAndStop() {
+    playlist.set([]);
+    current.set(null);
+    stop();
+    clearMediaSession();
+    setDocumentTitle();
+    setDocumentAlbumColor(null);
+}
+
 
 export function playItem(item) {
     if(!get(playlist).includes(item)) return;
@@ -196,11 +217,11 @@ audio.addEventListener('ended', () => {
 });
 audio.addEventListener('pause', () => {
     paused.set(true);
-    document.title = '|| ' + get(current).track.title;
+    setPlayingTitle(true,get(current));
 });
 audio.addEventListener('play', () => {
     paused.set(false);
-    document.title = '▶ ' + get(current).track.title;
+    setPlayingTitle(false,get(current));
 });
 // audio.addEventListener('timeupdate', () => {
 //     console.log('timeupdate',audio.currentTime);

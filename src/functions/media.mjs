@@ -32,3 +32,10 @@ export const setMediaSession = ({
         ]
     });
 }
+
+
+export const clearMediaSession = () => {
+    navigator.mediaSession.metadata = null;
+}
+
+

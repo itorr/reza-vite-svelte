@@ -1,6 +1,6 @@
 <script>
 	import { albumBurnNumber, albumLightNumber, hax2burn, hax2light } from "../functions/colors.mjs";
-	import { current, playCurrent, playlist } from "../state/player.mjs";
+	import { current, playCurrent, playlist, switchMode, mode, clearPlaylistAndStop } from "../state/player.mjs";
 	
 	import { getAlbumCoverURL } from "../functions/albums.mjs";
 	
@@ -12,7 +12,14 @@
 
 
 <div class="playlist-box">
-	<h1>Playlist</h1>
+	<div class="playlist-head">
+		<h1>Playlist</h1>
+		<div class="ctrl-box">
+			
+            <a on:click={switchMode}>{$mode}</a>
+			<a on:click={clearPlaylistAndStop}>Clear</a>
+		</div>
+	</div>
 	<div class="play-list">
 		{#each $playlist as item, itemIndex (item.track.id)}
 			<div class="play-item" 
@@ -40,7 +47,7 @@
 
 <style lang="less">
 	.playlist-box{
-		h1{
+		.playlist-head{
 			padding: 14px;
 		}
 		.play-list{
@@ -49,6 +56,7 @@
 				padding: 10px;
 				color: var(--album-color-dark);
 				cursor: pointer;
+				transition: background .3s ease;
 				&:hover{
 					background: var(--album-color-light);
 				}
