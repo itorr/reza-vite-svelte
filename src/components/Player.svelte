@@ -44,7 +44,7 @@
         <CoverDOM src={currentAlbumCoverImageURL} 
             alt={$current.album.title+'封面图'}
             className="{`album-cover ${$paused?'paused':''}`}" 
-            color="currentColor"
+            color="var(--album-light)"
             on:click={pauseOrPlay} />
         <div class="track-info">
             <h3>{$current.track.title}</h3>
