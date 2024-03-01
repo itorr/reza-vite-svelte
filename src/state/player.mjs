@@ -1,5 +1,5 @@
 import { get, writable } from 'svelte/store';
-import { getTrackMediaURL } from "../functions/albums.mjs";
+import { getAlbumCoverURL, getTrackMediaURL } from "../functions/albums.mjs";
 import { albumBurnNumber, albumLightNumber, hax2burn, hax2light } from '../functions/colors.mjs';
 
 export const audio = new Audio();
@@ -39,7 +39,7 @@ export function setPlaylistAndPlay(_playlist,_current) {
         title: _current.track.title,
         artist: String(_current.track.artist) || String(_current.album.artist) || 'Reza!',
         album: _current.album.title,
-        coverURL: _current.album.coverURL
+        coverURL: getAlbumCoverURL(_current.album)
     });
 }
 
