@@ -1,14 +1,12 @@
 
 
-export const 转换十进制=function(num){
+export const 转换十进制 = function(num){
 	return parseInt(num,16)
 };
-export const 十六进制转换十进制=function(color){
-	if(!color)
-		color='EEEEEE'
+export const 十六进制转换十进制=function(color = 'EEEEEE'){
 	return color.match(/\w\w/g).map(转换十进制)
 };
-export const 转换十六进制=function(num){
+export const 转换十六进制 = function(num){
 	num=num.toString(16);
 	return num.length==2?num:('0'+num)
 };
@@ -19,7 +17,7 @@ export const 十进制颜色转换十六进制=function(arr){
 
 
 
-export const rgb2hsl=function(o){
+export const rgb2hsl = function(o){
 	var
 	r=o[0],
 	g=o[1],

@@ -8,7 +8,7 @@
 	import CoverDOM from './CoverDOM.svelte';
 	import active from 'svelte-spa-router/active';
 
-    export let params = {};
+    // export let params = {};
     let currentTime = 0;
     let duration = 0;
     let progress = 0;
