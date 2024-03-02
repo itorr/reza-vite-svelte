@@ -24,10 +24,10 @@ const documentElementStyle = document.documentElement.style;
 
 
 export let albumColor = 'rgba(0,0,0,0)';
-export let albumColorDark = 'rgba(0,0,0,0)';
-export let albumColorLight = 'rgba(0,0,0,0)';
-export let albumColorAlpha05 = 'rgba(0,0,0,0)';
-export let albumColorAlpha02 = 'rgba(0,0,0,0)';
+export let albumColorDark = albumColor;
+export let albumColorLight = albumColor;
+export let albumColorAlpha05 = albumColor;
+export let albumColorAlpha02 = albumColor;
 
 
 export const setDocumentAlbumColor = (color)=>{
@@ -53,6 +53,7 @@ export const setDocumentAlbumColor = (color)=>{
 }
 
 
+setDocumentAlbumColor('777777');
 
 
 

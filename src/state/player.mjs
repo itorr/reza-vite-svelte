@@ -13,10 +13,43 @@ export const currentTrackId = writable(null);
 
 
 
-audio.crossOrigin='anonymous';
+audio.crossOrigin = 'anonymous';
 
-export const audioCtx = new AudioContext();
-export const audioSource = audioCtx.createMediaElementSource(audio);
+let audioCtx;
+let audioSource;
+let analyser;
+let bufferLength;
+let frequencyData;
+
+export const setAudioContextAndSourceOnPlay = () => {
+    if(isIOS) return;
+    
+    if(!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        audioSource = audioCtx.createMediaElementSource(audio);
+        
+        analyser = audioCtx.createAnalyser();
+
+        analyser.fftSize = 2048;
+        bufferLength = analyser.frequencyBinCount * 0.66;
+        frequencyData = new Uint8Array(bufferLength);
+
+        audioSource.connect(analyser);
+        analyser.connect(audioCtx.destination);
+    }
+    return {
+        audioCtx,
+        audioSource,
+        bufferLength,
+        frequencyData,
+    };
+}
+
+export const getFrequencyData = () => {
+    if(!analyser) return null;
+    analyser.getByteFrequencyData(frequencyData);
+    return frequencyData;
+}
 
 export function seek(time) {
     audio.currentTime = time;
@@ -88,6 +121,7 @@ export function setPlaylist(_playlist,_current) {
 
 import { clearMediaSession, setMediaSession } from "../functions/media.mjs";
 import { setDocumentTitle, setPlayingTitle } from '../functions/document-title';
+import { isIOS } from '@/functions/os.mjs';
 
 export function playCurrent(_current) {
     
@@ -226,6 +260,7 @@ audio.addEventListener('pause', () => {
 });
 audio.addEventListener('play', () => {
     paused.set(false);
+    setAudioContextAndSourceOnPlay();
     setPlayingTitle(false,get(current));
 });
 // audio.addEventListener('timeupdate', () => {

@@ -1,19 +1,19 @@
+const { userAgent } = navigator;
+const userAgentMatch = (function( userAgent ) {
+	userAgent = userAgent.toLowerCase();
 
-const uaMatch = (function( ua ) {
-	ua = ua.toLowerCase();
-
-	const browser = /(chrome)[ \/]([\w.]+)/               .exec( ua ) ||
-				  /(webkit)[ \/]([\w.]+)/               .exec( ua ) ||
-				  /(opera)(?:.*version|)[ \/]([\w.]+)/  .exec( ua ) ||
-				  /(msie) ([\w.]+)/                     .exec( ua ) ||
-				  ua.indexOf("compatible") < 0 && /(mozilla)(?:.*? rv:([\w.]+)|)/.exec( ua ) ||
+	const browser = /(chrome)[ \/]([\w.]+)/               .exec( userAgent ) ||
+				  /(webkit)[ \/]([\w.]+)/               .exec( userAgent ) ||
+				  /(opera)(?:.*version|)[ \/]([\w.]+)/  .exec( userAgent ) ||
+				  /(msie) ([\w.]+)/                     .exec( userAgent ) ||
+				  userAgent.indexOf("compatible") < 0 && /(mozilla)(?:.*? rv:([\w.]+)|)/.exec( userAgent ) ||
 				  [];
 
-	const os = /(windows) nt ([\d\.]+)?/    .exec(ua) ||
-			 /(mac) os ?x? ?([\d_\.]+)?/  .exec(ua) ||
-			 /(android) ?([\d\.]+)/       .exec(ua) ||
-			 /(linux) ?([\d\.]+)?/        .exec(ua) ||
-			 /(ipod|iphone|ipad)/		  .exec(ua) ||
+	const os = /(windows) nt ([\d\.]+)?/    .exec(userAgent) ||
+			 /(mac) os ?x? ?([\d_\.]+)?/  .exec(userAgent) ||
+			 /(android) ?([\d\.]+)/       .exec(userAgent) ||
+			 /(linux) ?([\d\.]+)?/        .exec(userAgent) ||
+			 /(ipod|iphone|ipad)/		  .exec(userAgent) ||
 			 [];
 
 	const osVersion = (os[ 2 ]||'').replace(/_/g,'.');
@@ -24,11 +24,14 @@ const uaMatch = (function( ua ) {
 		os:             os[ 1 ]||'',
 		osVersion,
 	};
-})(navigator.userAgent);
+})(userAgent);
 
+console.log('userAgentMatch',userAgentMatch);
 
-
-for(let key in uaMatch){
-	if(!uaMatch[key]) continue;
-    document.documentElement.setAttribute(`data-${key.replace(/[A-Z]/g,a=>`-${a.toLocaleLowerCase()}`)}`,uaMatch[key]);
+for(let key in userAgentMatch){
+	if(!userAgentMatch[key]) continue;
+    document.documentElement.setAttribute(`data-${key.replace(/[A-Z]/g,a=>`-${a.toLocaleLowerCase()}`)}`,userAgentMatch[key]);
 }
+
+
+export const isIOS = /ipod|iphone|ipad/i.test(userAgent);

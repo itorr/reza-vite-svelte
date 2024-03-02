@@ -72,18 +72,20 @@
     </div>
     {:else}
     <div class="playing-current-box">
-        <div class="visualization-box">
-            <h2>可视化，还没做</h2>
+        <div class="visualization-box" style="height: 200px;">
+            
         </div>
         <div class="progress-bar">
             <div class="progress" style={`width:${progress*100}%`}></div>
         </div>
-        <CoverDOM src=""
-            className="album-cover" 
-            color="currentColor" />
-        <div class="track-info">
-            <h3>Reza!</h3>
-            <p>welcome Reza!</p>
+        <div class="track-box">
+            <CoverDOM src=""
+                className="album-cover" 
+                color="currentColor" />
+            <div class="track-info">
+                <h3>Reza!</h3>
+                <p>welcome Reza!</p>
+            </div>
         </div>
     </div>
     {/if}

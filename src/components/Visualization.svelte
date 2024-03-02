@@ -1,14 +1,8 @@
 <script>
-	import { audio, audioCtx, audioSource } from "@/state/player.mjs";
+	import { audio, getFrequencyData,  } from "@/state/player.mjs";
 	import { onDestroy, onMount } from "svelte";
 
     import { albumColor, albumColorDark, albumColorLight } from '../functions/albums.mjs';
-
-    const analyser = audioCtx.createAnalyser();
-
-    analyser.fftSize = 2048;
-    const bufferLength = analyser.frequencyBinCount * 0.66;
-    const frequencyData  = new Uint8Array(bufferLength);
 
 
     let canvas;
@@ -22,13 +16,15 @@
 
     function draw() {
         drawVisual = requestAnimationFrame(draw);
-        analyser.getByteFrequencyData(frequencyData);
 
 
         // ctx.fillRect(0, 0, canvas.width, canvas.height);
 
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+        
+        const frequencyData = getFrequencyData();
+        if(!frequencyData) return;
 
         ctx.strokeStyle = albumColorDark;
         // ctx.strokeStyle = albumColor;
@@ -38,7 +34,7 @@
 
         for (let i = 0; i < row; i++ ) {
 
-            const v = Math.min(128,Math.abs(frequencyData[Math.floor((i / row) * bufferLength) ]) / 128);
+            const v = Math.min(128,Math.abs(frequencyData[Math.floor((i / row) * frequencyData.length) ]) / 128);
             const y = v * allHeight / 2;
 
             
@@ -75,21 +71,10 @@
 
         leftShift = canvas.width / row / 2;
         
-
-        audioSource.connect(analyser);
-        analyser.connect(audioCtx.destination);
-
-
-        // source.connect(audioCtx.destination);
-
         draw();
     });
 
     onDestroy(() => {
-
-        audioSource.disconnect(analyser);
-        analyser.disconnect(audioCtx.destination);
-
 
         cancelAnimationFrame(drawVisual);
 
