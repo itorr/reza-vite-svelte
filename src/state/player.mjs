@@ -22,8 +22,9 @@ let bufferLength;
 let frequencyData;
 
 export const setAudioContextAndSourceOnPlay = () => {
+    if(isMobile) return;
     if(isIOS) return;
-    
+
     if(!audioCtx) {
         audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         audioSource = audioCtx.createMediaElementSource(audio);
@@ -121,7 +122,7 @@ export function setPlaylist(_playlist,_current) {
 
 import { clearMediaSession, setMediaSession } from "../functions/media.mjs";
 import { setDocumentTitle, setPlayingTitle } from '../functions/document-title';
-import { isIOS } from '@/functions/os.mjs';
+import { isIOS, isMobile } from '@/functions/os.mjs';
 
 export function playCurrent(_current) {
     

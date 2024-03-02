@@ -35,3 +35,5 @@ for(let key in userAgentMatch){
 
 
 export const isIOS = /ipod|iphone|ipad/i.test(userAgent);
+
+export const isMobile = /android|ipod|iphone|ipad/i.test(userAgent);
