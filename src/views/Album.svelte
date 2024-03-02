@@ -52,7 +52,7 @@
             <Cover src={getAlbumCoverURL(album)} 
                 alt={album.title}
                 className="album-cover" 
-                color="currentColor" />
+                color="var(--album-color-light)" />
             <h2 class="album-title">{album.title}</h2>
             <p class="album-artist-names">{album.artist}</p>
         </div>

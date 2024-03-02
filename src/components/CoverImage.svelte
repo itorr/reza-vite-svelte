@@ -32,33 +32,3 @@
             on:load={onLoad}>
     {/if}
 </div>
-
-<style lang="less">
-    :root{
-        --cover-width:280px;
-    }
-    .ui-cover{
-        width:var(--cover-width);
-        height:var(--cover-width);
-
-        position: relative;
-        color: #EEE;
-        background: currentColor no-repeat 50% 50%;
-        background-size: cover;
-        box-shadow: currentColor 0px 10px 30px -20px;
-        img{
-            display: block;
-            width: 100%;
-            height:100%;
-            opacity: 0;
-            transform: scale(1.03);
-            transition:opacity .3s ease,transform .3s ease;
-        }
-        &[data-loading="false"]{
-            img{
-                transform: scale(1);
-                opacity: 1;
-            }
-        }
-    }
-</style>
