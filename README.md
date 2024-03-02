@@ -3,7 +3,17 @@
 又又又又又又又又起了个碟片管理，Reza！
 
 ## 地址
-https://lab.magiconch.com/reza/#/albums
+https://lab.magiconch.com/reza/
+
+
+## 功能
+ - 可视化
+
+## 未实现
+ - iOS 上的音频可视化
+ - 用户标记喜欢
+ - 用户播放信息统计
+
 
 ## 使用了
 
