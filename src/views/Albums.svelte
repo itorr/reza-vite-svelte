@@ -16,8 +16,8 @@
 </script>
 
 <div class="reza-albums">
-    <a href="#/albums?page=2">2</a>
-    <a href="#/albums?page=2&asd=121332">2</a>
+    <!-- <a href="#/albums?page=2">2</a> -->
+    <!-- <a href="#/albums?page=2&asd=121332">2</a> -->
     {#each $albums as album (album.id)}
     <div class="reza-album" 
         style={`color:#${hax2burn(album.colors[0],albumBurnNumber)}`}>
