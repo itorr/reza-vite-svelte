@@ -2,8 +2,9 @@
 	import { audio, getFrequencyData,  } from "@/state/player.mjs";
 	import { onDestroy, onMount } from "svelte";
 
-    import { albumColor, albumColorDark, albumColorLight } from '../functions/albums.mjs';
+    import { albumColor, albumColorDark, albumColorLight } from '../../functions/albums.mjs';
 
+    import './visualization.less';
 
     let canvas;
     let ctx;
@@ -88,17 +89,3 @@
     <!-- <h2>可视化，还没做</h2> -->
     <canvas bind:this={canvas}></canvas>
 </div>
-
-
-<style lang="less">
-    .visualization-box{
-        height: 200px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        canvas{
-            width: 400px;
-            height: 100px;
-        }
-    }
-</style>

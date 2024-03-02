@@ -7,7 +7,7 @@
 	import Cover from './Cover.svelte';
 	import CoverDOM from './CoverDOM.svelte';
 	import active from 'svelte-spa-router/active';
-	import Visualization from './Visualization.svelte';
+	import Visualization from './Visualization/Visualization.svelte';
 
     // export let params = {};
     let currentTime = 0;
@@ -24,7 +24,7 @@
 
     const onTimeUpdate = () => {
         currentTime = audio.currentTime;
-        duration = audio.duration;
+        duration = audio.duration || 0;
         progress = currentTime / duration;
     }
 

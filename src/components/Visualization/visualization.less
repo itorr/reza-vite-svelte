@@ -1,0 +1,20 @@
+
+.visualization-box{
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    canvas{
+        width: 400px;
+        height: 100px;
+    }
+}
+
+html[data-os="ipad"],
+html[data-os="ipod"],
+html[data-os="iphone"]{
+
+    .visualization-box{
+        display: none;
+    }
+}
