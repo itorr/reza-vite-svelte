@@ -37,7 +37,7 @@
 <style lang="less">
     footer{
         font-size: 12px;
-        padding: 30px 5px;
+        padding: 100px 5px;
         text-align: center;
         color: #999;
         line-height: 24px;

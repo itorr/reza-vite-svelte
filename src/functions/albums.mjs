@@ -1,4 +1,4 @@
-import { albumBurnNumber, albumLightNumber, hax2burn, hax2light } from "./colors.mjs";
+import { albumBurnNumber, albumLightNumber, hax2burn, hax2light, hax2rgba } from "./colors.mjs";
 import { BASE_MUSIC_ALBUMS_URL  } from "./config.mjs"
 
 
@@ -20,17 +20,36 @@ export const getArtistByAlbumTrack = (album, track) => {
 }
 
 
+const documentElementStyle = document.documentElement.style;
+
+
+export let albumColor = 'rgba(0,0,0,0)';
+export let albumColorDark = 'rgba(0,0,0,0)';
+export let albumColorLight = 'rgba(0,0,0,0)';
+export let albumColorAlpha05 = 'rgba(0,0,0,0)';
+export let albumColorAlpha02 = 'rgba(0,0,0,0)';
 
 
 export const setDocumentAlbumColor = (color)=>{
     if(!color) {
-        document.documentElement.style.cssText = '';
+        documentElementStyle.cssText = '';
         return;
     }
+    albumColor = '#' + color;
+
     
-    document.documentElement.style.setProperty('--album-color', '#'+color);
-    document.documentElement.style.setProperty('--album-color-dark', '#'+hax2burn(color,albumBurnNumber));
-    document.documentElement.style.setProperty('--album-color-light', '#'+hax2light(color,albumLightNumber));
+    // const darkColor = '#' + hax2burn(color,albumBurnNumber);
+    // const lightColor = '#' + hax2light(color,albumLightNumber);
+    albumColorDark = '#' + hax2burn(color,albumBurnNumber);
+    albumColorLight = '#' + hax2light(color,albumLightNumber);
+    albumColorAlpha05 = hax2rgba(albumColorDark,.5);
+    albumColorAlpha02 = hax2rgba(albumColorDark,.2);
+
+    documentElementStyle.setProperty('--album-color', '#'+color);
+    documentElementStyle.setProperty('--album-color-dark', albumColorDark);
+    documentElementStyle.setProperty('--album-color-light', albumColorLight);
+    documentElementStyle.setProperty('--album-color-alpha-05', albumColorAlpha05);
+    documentElementStyle.setProperty('--album-color-alpha-02', albumColorAlpha02);
 }
 
 

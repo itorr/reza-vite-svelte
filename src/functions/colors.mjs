@@ -105,4 +105,9 @@ export const albumBurnNumber = .35;
 export const albumLightNumber = .9;
 
 
+export const hax2rgba = function(hax,alpha){
+	const hsl=rgb2hsl(十六进制转换十进制(hax))
+	return `rgba(${hsl2rgb(hsl).join(',')},${alpha})`
+};
+
 

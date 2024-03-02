@@ -15,7 +15,7 @@
 <div class="rand-albums-box">
     <div class="head">
         <h2>推荐专辑</h2>
-        <p>每小时更新</p>
+        <p>整点更新</p>
     </div>
     <div class="reza-albums">
         {#each randAlbums as album (album.id)}

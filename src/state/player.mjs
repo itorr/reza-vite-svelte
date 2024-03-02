@@ -13,6 +13,11 @@ export const currentTrackId = writable(null);
 
 
 
+audio.crossOrigin='anonymous';
+
+export const audioCtx = new AudioContext();
+export const audioSource = audioCtx.createMediaElementSource(audio);
+
 export function seek(time) {
     audio.currentTime = time;
 }

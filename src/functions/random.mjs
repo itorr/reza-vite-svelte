@@ -10,7 +10,6 @@ export const randArrayByNumberRand100 = (arr,seed,size) => {
         const ri = rand100[(i++)%100];
         const rii = rand100v2[i%100];
         const v = Math.ceil(seed * ri / rii) % 2 === 1 ? 1 : -1;
-        console.log(v,seed,ri,rii,seed * ri / rii,Math.ceil(seed * ri / rii))
         return v;
     }).slice(0, size);
 }

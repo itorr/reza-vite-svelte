@@ -7,6 +7,7 @@
 	import Cover from './Cover.svelte';
 	import CoverDOM from './CoverDOM.svelte';
 	import active from 'svelte-spa-router/active';
+	import Visualization from './Visualization.svelte';
 
     // export let params = {};
     let currentTime = 0;
@@ -39,33 +40,41 @@
 <div class="player-box">
     {#if $current}
     <div class="playing-current-box" style={`color:#${hax2burn($current.album.colors[0],albumBurnNumber)}`}>
+        <Visualization />
         <div class="progress-bar">
+            <time>
+                <span data-text={second2ms(currentTime)}></span>
+                /
+                <span data-text={second2ms(duration)}></span>
+            </time>
             <div class="progress" style={`width:${progress*100}%`}></div>
         </div>
-        <CoverDOM src={currentAlbumCoverImageURL} 
-            alt={$current.album.title}
-            className="{`album-cover ${$paused?'paused':''}`}" 
-            color="var(--album-color-light)"
-            on:click={pauseOrPlay} />
-        <div class="track-info">
-            <h3>{$current.track.title}</h3>
-            <p>{$current.track.artist || $current.album.artist }</p>
-            <a on:click={pauseOrPlay}>{ $paused ? 'play' : 'pause'}</a>
-            <a on:click={prev}>prev</a>
-            <a on:click={next}>next</a>
-            <a on:click={switchMode}>{$mode}</a>
-            <span class="r">
-		        <a href="#/playlist" use:active>playlist</a>
-            </span>
+
+        <div class="track-box">
+            <CoverDOM src={currentAlbumCoverImageURL} 
+                alt={$current.album.title}
+                className="{`album-cover ${$paused?'paused':''}`}" 
+                color="var(--album-color-light)"
+                on:click={pauseOrPlay} />
+            <div class="track-info">
+                <h3>{$current.track.title}</h3>
+                <p>{$current.track.artist || $current.album.artist }</p>
+            </div>
+            <div class="ctrl-box">
+                <!-- <a on:click={switchMode}>{$mode}</a> -->
+                <a on:click={pauseOrPlay}>{ $paused ? 'play' : 'pause'}</a>
+                <!-- <a on:click={prev}>prev</a> -->
+                <a on:click={next}>next</a>
+                <br>
+                <a href="#/playlist" use:active>playlist</a>
+            </div>
         </div>
-        <time>
-            <span data-text={second2ms(currentTime)}></span>
-            /
-            <span data-text={second2ms(duration)}></span>
-        </time>
     </div>
     {:else}
     <div class="playing-current-box">
+        <div class="visualization-box">
+            <h2>可视化，还没做</h2>
+        </div>
         <div class="progress-bar">
             <div class="progress" style={`width:${progress*100}%`}></div>
         </div>
@@ -79,80 +88,3 @@
     </div>
     {/if}
 </div>
-
-<style lang="less">
-.player-box{
-    // overflow: hidden;
-
-    position: relative;
-    z-index: 0;
-
-    &:after{
-        content: '';
-        display: block;
-        clear: both;
-        margin-top: -1px;
-        height: 1px;
-        width: 100%;
-        background-color: var(--album-color-dark);
-        opacity: .2;
-
-        box-shadow: 
-            0 2px 0 0 var(--album-color-light),
-            0 3px 10px -3px var(--album-color-light);
-    }
-
-    :global(.album-cover){
-        float: left;
-        --cover-width: 80px;
-        cursor: pointer;
-    }
-    :global(.album-cover.paused){
-        opacity: .5;
-    }
-    .track-info{
-        padding: 5px 10px 5px 90px;
-        h3{
-            font-size: 18px;
-            margin: 0;
-        }
-        p{
-            margin: 0;
-            font-size: 12px;
-            opacity: 0.5;
-        }
-        a{
-            :global(&.active){
-                font-weight: bold;
-            }
-        }
-    }
-    .progress-bar{
-        clear: both;
-        position: relative;
-        width: 100%;
-        height: 5px;
-        cursor: pointer;
-        .progress{
-            pointer-events: none;
-            position: absolute;
-            top: 0;
-            left: 0;
-            height: 100%;
-            border-radius: 2px;
-            min-width: 2px;
-            background-color: currentColor;
-        }
-    }
-    time{
-        position: absolute;
-        right:8px;
-        top:8px;
-        line-height: 12px;
-        font-size: 12px;
-        span{
-            display: inline-block;
-        }
-    }
-}
-</style>

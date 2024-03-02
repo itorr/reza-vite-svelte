@@ -2,6 +2,7 @@
     overflow: hidden;
     padding: 5px;
     font-size: 14px;
+    margin: 0 auto;
     .reza-album {
         float: left;
         --album-padding: 5px;
@@ -71,18 +72,20 @@
             --cover-width: calc( 100vw / 6 - var(--album-padding) * 3 );
         }
     }
-    @media (min-width: 1700px) {
+
+    // 7 竖列
+    @media (min-width: 2200px) {
+        width: 1890px;
         .reza-album {
-            width: 14.2857%;
-            --cover-width: calc( 100vw / 7 - var(--album-padding) * 3 );
+            width: 270px;
+            --cover-width: 260px;
         }
     }
     @media (min-width: 2100px) {
-        max-width: 2080px;
-        margin: 0 auto;
+        width: 2160px;
         .reza-album {
-            width: 12.5%;
-            --cover-width: calc( 2080px / 8 - var(--album-padding) * 3 );
+            width: 270px;
+            --cover-width: 260px;
         }
     }
 
