@@ -5,7 +5,7 @@ import active from "svelte-spa-router/active";
 
 <header class="head-bar">
 	<nav>
-		<!-- <a href="#/" use:active>Reza!</a> -->
+		<a href="#/" use:active>Reza!</a>
 		<a href="#/albums" use:active>Albums</a>
 		<!-- <a href="#/playlist" use:active>Playlist</a> -->
 		<a href="#/search" use:active>Search</a>

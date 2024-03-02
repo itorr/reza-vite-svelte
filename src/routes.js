@@ -1,5 +1,5 @@
 
-import Home from "./views/Home.svelte";
+import Home from "./views/home/Home.svelte";
 import Albums from "./views/Albums.svelte";
 import Album from "./views/Album.svelte";
 import Playlist from "./views/Playlist.svelte";
