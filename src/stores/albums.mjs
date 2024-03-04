@@ -7,7 +7,13 @@ import { fetchJSON } from "../functions/fetch.mjs";
 export const albums = writable([]);
 
 
-export const fetchAlbums = async () => await fetchJSON(`${BASE_MUSIC_URL}albums.json`);
+export const fetchAlbums = async () => {
+    let _albums = await fetchJSON(`${BASE_MUSIC_URL}albums.json`);
+
+    _albums = _albums.filter(album=>album.colors);
+
+    return _albums;
+}
 
 
 let albumsLoadPromise = null;
