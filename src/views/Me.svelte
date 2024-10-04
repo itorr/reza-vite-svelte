@@ -1,5 +1,11 @@
 <script>
+import { getAlbumByRandom } from "@/stores/albums.mjs";
 
+const getRandAlbum = async () => {
+    const album = await getAlbumByRandom();
+    console.log(album);
+    location.href = `#/album/${album.id}`;
+}
 </script>
 
 <h1>Me</h1>
@@ -10,5 +16,5 @@
 
 <div class="ctrl-box">
     <button>播放我喜欢的音乐</button>
-    <button>随机一张碟</button>
+    <button on:click={getRandAlbum}>随机一张碟</button>
 </div>

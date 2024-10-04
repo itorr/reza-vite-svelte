@@ -64,6 +64,7 @@
                         {#each disk.tracks as track, trackIndex (track.id)}
                             <div class="track-item" 
                                 on:click={playTrackInAlbum(track)}
+                                data-have-fname={!!track.fname}
                                 data-active={$currentTrackId === track.id}>
                                 <i>{trackIndex + 1}</i>
                                 <h4>{track.title}</h4>

@@ -42,10 +42,19 @@ export const getAlbumsByRandom = async (count) => {
     
 }
 
+export const getAlbumByRandom = async () => {
+    return (await getAlbumsByRandom(1))[0];
+}
 
 import { randArrayByNumberRand100 } from "../functions/random.mjs";
 
 export const getAlbumsByRandomSeed = async (seed,count) => {
     await updateAlbums();
     return randArrayByNumberRand100(get(albums),seed,count);
+}
+
+export const getAlbumsByKeyword = async (keyword) => {
+    await updateAlbums();
+
+    return get(albums).filter( album => album.title.toLowerCase().includes(keyword.toLowerCase()) );
 }
