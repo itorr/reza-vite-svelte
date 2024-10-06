@@ -1,6 +1,6 @@
 <script>
     import { getAlbumCoverURL, getTrackMediaURL } from '../functions/albums.mjs';
-    import { audio, current, next, pauseOrPlay, paused, prev, mode, switchMode } from '../state/player.mjs';
+    import { audio, current, next, pauseOrPlay, paused, prev, mode, switchMode, setVolume } from '../state/player.mjs';
     import { albumBurnNumber, hax2burn } from '../functions/colors.mjs';
     import { second2ms } from '../functions/time.mjs';
 	import { onDestroy, onMount } from 'svelte';
@@ -34,7 +34,6 @@
     onDestroy(() => {
         audio.removeEventListener('timeupdate', onTimeUpdate);
     });
-    
 </script>
 
 <div class="player-box">
@@ -67,6 +66,9 @@
                 <a on:click={next}>next</a>
                 <br>
                 <a href="#/playlist" use:active>playlist</a>
+                <br>
+                <a on:click={()=>setVolume(0.1)}>0.1</a>
+                <a on:click={()=>setVolume(1)}>1</a>
             </div>
         </div>
     </div>
