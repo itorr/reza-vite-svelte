@@ -11,6 +11,20 @@ export const fetchAlbums = async () => {
     let _albums = await fetchJSON(`${BASE_MUSIC_URL}albums.json`);
 
     _albums = _albums.filter(album=>album.colors);
+    _albums.forEach(album=>{
+        const texts = [
+            album.title
+        ];
+
+        if(album.artist){
+            album.artist.forEach( artist => texts.push(artist) );
+        }
+
+        album.disks.forEach( disk => {
+            disk.tracks.forEach( track => texts.push(track.title) );
+        });
+        album._text = texts.join(' ').toLowerCase();
+    });
 
     return _albums;
 }
@@ -56,5 +70,8 @@ export const getAlbumsByRandomSeed = async (seed,count) => {
 export const getAlbumsByKeyword = async (keyword) => {
     await updateAlbums();
 
-    return get(albums).filter( album => album.title.toLowerCase().includes(keyword.toLowerCase()) );
+    const keywordLower = keyword.toLowerCase();
+    return get(albums).filter( album => {
+        return album._text.includes( keywordLower )
+    } );
 }

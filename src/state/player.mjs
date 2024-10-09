@@ -248,6 +248,21 @@ export function removePlaylistItem(v) {
 
 
 
+export const setPlaylistByAlbumsAndPlay = async (albums) => {
+    const _playlist = [];
+    albums.forEach(album => {
+        album.disks.forEach(disk => {
+            disk.tracks.forEach(track => {
+                _playlist.push({
+                    album,
+                    track
+                });
+            });
+        });
+    });
+    setPlaylistAndPlay(_playlist,_playlist[0]);
+
+}
 
 audio.addEventListener('ended', () => {
 
