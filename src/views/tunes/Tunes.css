@@ -1,0 +1,53 @@
+.tunes-albums {
+  padding: 20px 5px;
+}
+.tunes-album {
+  display: flex;
+  padding: 5px;
+  color: var(--album-color);
+}
+.tunes-album .album-info {
+  width: 240px;
+  margin-right: 10px;
+}
+.tunes-album .album-info .album-cover {
+  width: 240px;
+  height: 240px;
+  border-radius: 4px;
+}
+.tunes-album .album-info .album-title {
+  font-size: 24px;
+  line-height: 1;
+  margin-top: 10px;
+}
+.tunes-album .album-info .album-artist-names {
+  font-size: 14px;
+  opacity: 0.5;
+}
+.tunes-album .disk-list .disk-item h3 {
+  font-size: 12px;
+}
+.tunes-album .disk-list .disk-item .track-list .track-item {
+  color: currentColor;
+  display: flex;
+  flex-direction: row;
+  line-height: 16px;
+  padding: 8px 12px;
+  border-radius: 4px;
+}
+.tunes-album .disk-list .disk-item .track-list .track-item i {
+  font-style: normal;
+  margin-right: 10px;
+}
+.tunes-album .disk-list .disk-item .track-list .track-item .track-item-info p {
+  opacity: 0.5;
+  font-size: 12px;
+}
+.tunes-album .disk-list .disk-item .track-list .track-item[data-active="true"] {
+  background: var(--album-color);
+  color: #FFF;
+}
+.tunes-album .disk-list .disk-item .track-list .track-item[data-have-fname="false"] {
+  pointer-events: none;
+  opacity: 0.2;
+}

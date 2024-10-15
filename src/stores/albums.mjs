@@ -42,17 +42,21 @@ const updateAlbums = async () => {
 
 updateAlbums();
 
+export const getAlbums = ()=>{
+    return get(albums);
+}
+
 export const getAlbumById = async (id) => {
     await updateAlbums();
 
-    return get(albums).find( album => album.id === id );
+    return getAlbums().find( album => album.id === id );
 }
 
 
 export const getAlbumsByRandom = async (count) => {
     await updateAlbums();
 
-    return get(albums).sort( () => Math.random() - 0.5 ).slice(0, count);
+    return getAlbums().sort( () => Math.random() - 0.5 ).slice(0, count);
     
 }
 
@@ -64,14 +68,14 @@ import { randArrayByNumberRand100 } from "../functions/random.mjs";
 
 export const getAlbumsByRandomSeed = async (seed,count) => {
     await updateAlbums();
-    return randArrayByNumberRand100(get(albums),seed,count);
+    return randArrayByNumberRand100(getAlbums(),seed,count);
 }
 
 export const getAlbumsByKeyword = async (keyword) => {
     await updateAlbums();
 
     const keywordLower = keyword.toLowerCase();
-    return get(albums).filter( album => {
+    return getAlbums().filter( album => {
         return album._text.includes( keywordLower )
     } );
 }

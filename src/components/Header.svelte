@@ -10,6 +10,7 @@ import active from "svelte-spa-router/active";
 		<!-- <a href="#/playlist" use:active>Playlist</a> -->
 		<a href="#/search" use:active>Search</a>
 		<a href="#/me" use:active>Me</a>
+		<a href="#/tunes" use:active>Tunes</a>
 		<!-- <a href="#/favorite" use:active>Favorite</a>
 		<a href="#/stat" use:active>Stat</a> -->
 	</nav>

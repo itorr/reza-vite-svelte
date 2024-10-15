@@ -1,0 +1,68 @@
+.tunes-albums{
+	padding: 20px 5px;
+}
+
+.tunes-album{
+	display: flex;
+	padding: 5px;
+
+	color: var(--album-color);
+
+	.album-info{
+		width: 240px;
+		margin-right: 10px;
+		.album-cover{
+			width: 240px;
+			height: 240px;
+			border-radius: 4px;
+
+		}
+		.album-title{
+			font-size: 24px;
+			line-height: 1;
+			margin-top: 10px;
+		}
+		.album-artist-names{
+			font-size: 14px;
+			opacity: 0.5;
+		}
+	}
+	.disk-list{
+		.disk-item{
+			h3{
+				font-size:12px;
+			}
+			.track-list{
+				.track-item{
+					color: currentColor;
+
+					display: flex;
+					flex-direction: row;
+					line-height: 16px;
+					padding: 8px 12px;
+
+					border-radius: 4px;
+					i{
+						font-style: normal;
+						margin-right: 10px;
+					}
+					.track-item-info{
+						p{
+							opacity: 0.5;
+							font-size: 12px;
+						}
+					}
+
+					&[data-active="true"]{
+						background: var(--album-color);
+						color: #FFF;
+					}
+					&[data-have-fname="false"]{
+						pointer-events: none;
+						opacity: 0.2;
+					}
+				}
+			}
+		}
+	}
+}
